@@ -43,20 +43,24 @@ def fitness_function(chromosome):
     return sum
 
 
-Gen_number=20
-Quantity_initial_poblation=100
+Gen_number=5
+Quantity_initial_poblation=10
 cross_over_probability=0.7
 mutation_probability=0.001
 initial_poblation=[]
+fitness_poblation=0
 for i in range(Quantity_initial_poblation):
     chromosome=Chromosome()
     chromosome.list=generate_random_cromosome(Gen_number)
     chromosome.ff=fitness_function(chromosome.list)
+    fitness_poblation=fitness_poblation+chromosome.ff
     initial_poblation.append(chromosome)
 
+for chrom in initial_poblation:
+    chrom.ps=chrom.ff/fitness_poblation
 
 for i in range(Quantity_initial_poblation):
-    print(initial_poblation[i].list, initial_poblation[i].ff)
+    print(initial_poblation[i].list, initial_poblation[i].ff,'/',fitness_poblation,'=',initial_poblation[i].ps )
 
 
 
