@@ -1,6 +1,6 @@
-#from random import seed
 from random import randint
-#seed(1)
+from random import randrange
+
 class Chromosome():
     def __init__(self):
         self.list=[]
@@ -34,6 +34,12 @@ def crossover(crz,cra):
     cra.extend(halfa1)
     cra.extend(halfz2)
     return crz,cra
+
+# Mutation: Change a Random bit
+def mutation(chromosome_crossover):
+    random_position =  randrange(20)
+    chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
+    return chromosome_crossover
 
 def fitness_function(chromosome):
     sum=0
