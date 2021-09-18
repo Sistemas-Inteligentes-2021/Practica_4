@@ -19,6 +19,7 @@ def mutation(chromosome_crossover):
 # result = mutation (chrom_0)
 # print(chrom_0)
 # print(result)
+
 print(chrom_1)
 result = mutation (chrom_1)
 print(result)
