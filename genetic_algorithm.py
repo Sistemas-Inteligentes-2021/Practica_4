@@ -1,5 +1,6 @@
 from random import randint
 from random import randrange
+import copy
 
 class Chromosome():
     def __init__(self):
