@@ -50,7 +50,7 @@ def crossover(crx,cry,crossover_prob):
 # Mutation: Change a Random bit
 def mutation(chromosome_crossover,mutation_prob,gen_quantity):
     if random.random()<=mutation_prob:
-        random_position =  randrange(20)
+        random_position =  randrange(gen_quantity)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
         return chromosome_crossover
     return chromosome_crossover
@@ -98,7 +98,7 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
             for chrom in initial_poblation:
-                chrom.ps=chrom.ff/fitness_poblation     #Get the prob selection of the generation 
+                chrom.ps=chrom.ff/(fitness_poblation if fitness_poblation !=0 else 1)    #Get the prob selection of the generation 
                  
             new_generation=[]
             fitness_poblation=0
@@ -107,8 +107,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
                 cry=Chromosome()
                 crx,cry=selection(initial_poblation)
                 crx.list,cry.list=crossover(crx.list,cry.list,cross_over_probability)
-                crx.list=mutation(crx.list,mutation_probability)
-                cry.list=mutation(cry.list,mutation_probability)
+                crx.list=mutation(crx.list,mutation_probability,Gen_number)
+                cry.list=mutation(cry.list,mutation_probability,Gen_number)
                 crx.ff=fitness_function(crx.list)
                 cry.ff=fitness_function(cry.list)
                 fitness_poblation=fitness_poblation+crx.ff+cry.ff
