@@ -64,8 +64,15 @@ def fitness_function(chromosome):
 
 ##Averiguar com ohacerlo en base a su probabilidad
 def selection(poblation):
-    poblation_size=len(poblation)-1
-    return poblation[randint(0,poblation_size)], poblation[randint(0,poblation_size)]
+    # poblation_size=len(poblation)-1
+    # return poblation[randint(0,poblation_size)], poblation[randint(0,poblation_size)]
+    print("-----------------------")
+    weights = [i.ff for i in poblation]
+    print(weights)
+    items = random.choices(poblation, weights=weights, k=2)
+    print(items[0].list)
+    print(items[1].list)
+    return items[0],items[1]
 
 def compare_chromosome(chromosome,goal_chromosome):
     for i in range(len(goal_chromosome)):
@@ -84,6 +91,8 @@ def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromos
         chromosome.list=generate_random_cromosome(Gen_number) #Generate the chromosome
         chromosome.ff=fitness_function(chromosome.list)  #Finde his Fitness function
         fitness_poblation=fitness_poblation+chromosome.ff
+        print("********************")
+        print(fitness_poblation)
         initial_poblation.append(chromosome)     #Added into the generation
         find_chromosome_objetive=find_chromosome_objetive or compare_chromosome(chromosome.list,objective_chromosome)
     return fitness_poblation,initial_poblation,find_chromosome_objetive
@@ -95,10 +104,12 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
         cycle=1
         #First Generation
         fitness_poblation,initial_poblation,find_chromosome_objetive=run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromosome)
+        
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
             for chrom in initial_poblation:
-                chrom.ps=chrom.ff/(fitness_poblation if fitness_poblation !=0 else 1)    #Get the prob selection of the generation 
+                
+                chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation 
                  
             new_generation=[]
             fitness_poblation=0

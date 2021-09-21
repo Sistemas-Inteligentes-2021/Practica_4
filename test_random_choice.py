@@ -6,10 +6,13 @@ sample_list = [100, 200, 300, 400, 500]
 sample_weights = [10, 20, 30, 40, 50]
 sample_weights2 = [0.1, 0.2, 0.3, 0.2, 0.2] # Sum = 1
 
+
 # List Strings 
 my_list = ['manzana', 'banana', 'pera', 'uva']
 my_weights = [0.2, 0.3, 0.1, 0.4]
 
+super_test = [i[0] for i in my_list ]
+print(super_test)
 # List Strings 
 elements = ['one', 'two', 'three'] 
 weights = [0.2, 0.3, 0.5]
