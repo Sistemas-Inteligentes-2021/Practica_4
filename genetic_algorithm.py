@@ -48,9 +48,9 @@ def crossover(crx,cry,crossover_prob):
     return crx,cry
 
 # Mutation: Change a Random bit
-def mutation(chromosome_crossover,mutation_prob):
+def mutation(chromosome_crossover,mutation_prob,gen_quantity):
     if random.random()<=mutation_prob:
-        random_position =  randrange(20)
+        random_position =  randrange(gen_quantity)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
         return chromosome_crossover
     return chromosome_crossover
@@ -98,7 +98,7 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
             for chrom in initial_poblation:
-                chrom.ps=chrom.ff/fitness_poblation     #Get the prob selection of the generation 
+                chrom.ps=chrom.ff/(fitness_poblation if fitness_poblation !=0 else 1)    #Get the prob selection of the generation 
                  
             new_generation=[]
             fitness_poblation=0
@@ -106,9 +106,9 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
                 crx=Chromosome()
                 cry=Chromosome()
                 crx,cry=selection(initial_poblation)
-                crx.list,cry.list=crossover(crx,cry,cross_over_probability)
-                crx.list=mutation(crx,mutation_probability)
-                cry.list=mutation(cry,mutation_probability)
+                crx.list,cry.list=crossover(crx.list,cry.list,cross_over_probability)
+                crx.list=mutation(crx.list,mutation_probability,Gen_number)
+                cry.list=mutation(cry.list,mutation_probability,Gen_number)
                 crx.ff=fitness_function(crx.list)
                 cry.ff=fitness_function(cry.list)
                 fitness_poblation=fitness_poblation+crx.ff+cry.ff
@@ -121,8 +121,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
     return average/max_run_cycles
 
 
-Gen_number=20
-Quantity_initial_poblation=100
+Gen_number=5
+Quantity_initial_poblation=10
 cross_over_probability=0.7
 mutation_probability=0.001
 
