@@ -26,12 +26,14 @@ def crossover(crx,cry,crossover_prob,Gen_number):
     return crx,cry
 
 # Mutation: Change a Random bit
-def mutation(chromosome_crossover,mutation_prob,gen_quantity):
+def mutation(chromosome_crossover,cry,mutation_prob,gen_quantity):
     if random.random()<=mutation_prob:
         random_position =  randrange(gen_quantity)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
-        return chromosome_crossover
-    return chromosome_crossover
+        random_position =  randrange(gen_quantity)
+        cry[random_position] = 1 if cry[random_position] == 0 else 0
+        return chromosome_crossover,cry
+    return chromosome_crossover,cry
 
 def fitness_function(chromosome):
     return sum(chromosome)
@@ -66,20 +68,24 @@ def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromos
 
 def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles):
     average=0
-    objective_chromosome=20
+    objective_chromosome=Gen_number
     for i in range(max_run_cycles) :
         cycle=1
         #First Generation        
         initial_poblation,ff,find_chromosome_objetive=run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromosome)
+
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
             new_generation=[]
             newff=[]
-            while len(new_generation)<len(initial_poblation):                
+            while len(new_generation)<len(initial_poblation):     
+                           
                 crx,cry=selection(initial_poblation,ff)
+                # crx=copy.deepcopy(crxi);
+                # cry=copy.deepcopy(cryi);
                 crx,cry=crossover(crx,cry,cross_over_probability,Gen_number)
-                crx=mutation(crx,mutation_probability,Gen_number)
-                cry=mutation(cry,mutation_probability,Gen_number)
+                crx,cry=mutation(crx,cry,mutation_probability,Gen_number)
+                #cry=mutation(cry,mutation_probability,Gen_number)
                 ffx=fitness_function(crx)
                 ffy=fitness_function(cry)
                 newff.append(ffx)
@@ -93,8 +99,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
     return average/max_run_cycles
 
 
-Gen_number=20
-Quantity_initial_poblation=100
+Gen_number=10
+Quantity_initial_poblation=10
 cross_over_probability=0.7
 mutation_probability=0.001
 
