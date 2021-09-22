@@ -152,7 +152,7 @@ Which is the best quantity for initial poblation?
 
 ### Comments
 
-
+At the beggining we experiment a lot of problems principally in the situation of the selection of the cromosomes. so we decided to change the focus we work with list, at the beggining we experimented that work with list is more efficient and find a solution, unfortunetly we got some values of generations that were overcalculated with values extremely high, but we resolved it changing the partition of the crossover function, now the partition is not for the middle the partition is chosed randomly, and with that we get more real values, some values still being extremely high but is because the number of chromosomes in the initial state, we can conclude that with more poblation of chromosomes we get more real values and in less steps
 
 
 ## 5. Bibliography
