@@ -1,34 +1,32 @@
+# Imports
 from random import randint
 from random import randrange
-import copy
-from numpy.random import choice
-import random
+from random import choices
+from random import random
 
-
-def generate_objetiveChromosome(length):
-    chrom=[]
-    for i in range(length):
-        chrom.append(1)
+def generate_objetive_chromosome(length):
+    chrom = [1] * length
     return chrom
 
-def generate_random_cromosome(Gen_number):
-    cromosome=[]
-    for i in range(Gen_number):        
+def generate_random_cromosome(length):
+    cromosome = []
+    for i in range(length):        
         cromosome.append(randint(0, 1))
     return cromosome
 
 
-def crossover(crx,cry,crossover_prob,Gen_number):
-    if random.random()<=crossover_prob:
-        crx1=crx[:int(Gen_number/2)]+cry[int(Gen_number/2):]
-        cry1=cry[:int(Gen_number/2)]+crx[int(Gen_number/2):]
+def crossover(crx,cry,crossover_prob,length):
+    middle = int(length/2)
+    if random()<=crossover_prob:
+        crx1=crx[:middle]+cry[middle:]
+        cry1=cry[:middle]+crx[middle:]
         return crx1,cry1
     return crx,cry
 
 # Mutation: Change a Random bit
-def mutation(chromosome_crossover,mutation_prob,gen_quantity):
-    if random.random()<=mutation_prob:
-        random_position =  randrange(gen_quantity)
+def mutation(chromosome_crossover,mutation_prob,length):
+    if random()<=mutation_prob:
+        random_position =  randrange(length)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
         return chromosome_crossover
     return chromosome_crossover
@@ -38,7 +36,7 @@ def fitness_function(chromosome):
 
 # With choices
 def selection(poblation,ff):    
-    items = random.choices(poblation, weights=ff, k=2)
+    items = choices(poblation, weights=ff, k=2)
     return items[0],items[1]
 
 
