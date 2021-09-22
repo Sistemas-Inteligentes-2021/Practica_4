@@ -1,6 +1,7 @@
 from random import randint
 from random import randrange
 import copy
+from numpy.random import choice
 import random
 
 class Chromosome():
@@ -13,8 +14,8 @@ class Chromosome():
         self.list=list
     def setff(self,ff):
         self.ff=ff
-    # def setPs(self,ps):
-    #     self.ps=ps
+    def setPs(self,ps):
+        self.ps=ps
 def generate_objetiveChromosome(length):
     chrom=[]
     for i in range(length):
@@ -63,20 +64,23 @@ def fitness_function(chromosome):
     return sum
 
 ## With choices
-def selection(poblation):
-    # poblation_size=len(poblation)-1
-    # return poblation[randint(0,poblation_size)], poblation[randint(0,poblation_size)]
-    weights = [i.ff for i in poblation]
-    items = random.choices(poblation, weights=weights, k=2)
-    return items[0],items[1]
+# def selection(poblation):
+#     weights = [i.ff for i in poblation]
+#     items = random.choices(poblation, weights=weights, k=2)
+#     return items[0],items[1]
 
 
 
 ## With choice
 def selection(poblation):
-    weights = [i.ff for i in poblation]
-    items = random.choices(poblation, weights=weights, k=2)
-    return items[0],items[1]
+    weights = [i.ps for i in poblation]
+    total_weight=0
+    for i in weights:
+        total_weight=total_weight+i
+    
+    item1 = choice(poblation, p=weights)
+    item2 = choice(poblation, p=weights)
+    return item1,item2
 
 
 def compare_chromosome(chromosome,goal_chromosome):
@@ -113,11 +117,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
         
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
-
-            # for chrom in initial_poblation:
-                
-            #     chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation 
-                 
+            for chrom in initial_poblation:                
+                chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation                  
             new_generation=[]
             fitness_poblation=0
             while len(new_generation)<len(initial_poblation):
