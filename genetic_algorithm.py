@@ -24,8 +24,8 @@ def crossover(crx,cry,crossover_prob,length):
     return crx,cry
 
 # Mutation: Change a Random bit
-def mutation(chromosome_crossover,mutation_prob,length):
-    if random()<=mutation_prob:
+def mutation(chromosome_crossover,length):
+    if random()<=mutation_probability:
         random_position =  randrange(length)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
         return chromosome_crossover
@@ -62,7 +62,7 @@ def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromos
         find_chromosome_objetive = ff_chromosome==objective_chromosome
     return initial_poblation,ff,find_chromosome_objetive
 
-def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles):
+def genetic_algorithm(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles):
     average=0
     objective_chromosome=20
     for i in range(max_run_cycles) :
@@ -97,6 +97,6 @@ cross_over_probability=0.7
 mutation_probability=0.001
 
 max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: \n"))
-average_cycle=run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles)
+average_cycle=genetic_algorithm(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles)
 print("the experiment find the best solution in the average of ", average_cycle,"generations")
 
