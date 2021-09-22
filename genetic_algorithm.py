@@ -1,7 +1,5 @@
 from random import randint
 from random import randrange
-import copy
-from numpy.random import choice
 import random
 
 
@@ -26,14 +24,12 @@ def crossover(crx,cry,crossover_prob,Gen_number):
     return crx,cry
 
 # Mutation: Change a Random bit
-def mutation(chromosome_crossover,cry,mutation_prob,gen_quantity):
+def mutation(chromosome_crossover,mutation_prob,gen_quantity):
     if random.random()<=mutation_prob:
         random_position =  randrange(gen_quantity)
         chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
-        random_position =  randrange(gen_quantity)
-        cry[random_position] = 1 if cry[random_position] == 0 else 0
-        return chromosome_crossover,cry
-    return chromosome_crossover,cry
+        return chromosome_crossover
+    return chromosome_crossover
 
 def fitness_function(chromosome):
     return sum(chromosome)
@@ -84,8 +80,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
                 # crx=copy.deepcopy(crxi);
                 # cry=copy.deepcopy(cryi);
                 crx,cry=crossover(crx,cry,cross_over_probability,Gen_number)
-                crx,cry=mutation(crx,cry,mutation_probability,Gen_number)
-                #cry=mutation(cry,mutation_probability,Gen_number)
+                crx=mutation(crx,mutation_probability,Gen_number)
+                cry=mutation(cry,mutation_probability,Gen_number)
                 ffx=fitness_function(crx)
                 ffy=fitness_function(cry)
                 newff.append(ffx)
@@ -100,7 +96,7 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
 
 
 Gen_number=10
-Quantity_initial_poblation=10
+Quantity_initial_poblation=100
 cross_over_probability=0.7
 mutation_probability=0.001
 
