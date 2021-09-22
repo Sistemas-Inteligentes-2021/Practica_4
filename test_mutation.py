@@ -4,8 +4,8 @@ from random import randrange
 
 gens_number = 20
 chrom_0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-chrom_1 = [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1]
-chrom_2 = [1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1]
+chrom_1 = [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1] # 10 #
+chrom_2 = [1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1] # 12
 
 # Mutation: Change a random bit
 def mutation(chromosome_crossover):
@@ -16,6 +16,20 @@ def mutation(chromosome_crossover):
     return chromosome_crossover
 
 
+sum_c1 = sum (chrom_1)
+sum_c2 = sum (chrom_2)
+print(sum_c1)
+print(sum_c2)
+
+print("-------------")
+
+i_c1 = chrom_0[:10]
+e_c1 = chrom_0[10:]
+
+print(i_c1)
+print(e_c1)
+
+print("-------------")
 # result = mutation (chrom_0)
 # print(chrom_0)
 # print(result)
@@ -23,3 +37,4 @@ def mutation(chromosome_crossover):
 print(chrom_1)
 result = mutation (chrom_1)
 print(result)
+
