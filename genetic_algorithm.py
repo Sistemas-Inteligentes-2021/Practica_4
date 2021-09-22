@@ -6,9 +6,9 @@ from random import random
 
 # Global Vars
 number_genes=20
-quantity_population=100
+quantity_population=1000
 
-crossover_probability=0.7
+crossover_probability=0.9
 mutation_probability=0.001
 
 # Generate [1, 1, 1, 1, ... ]
