@@ -80,8 +80,8 @@ def genetic_algorithm(Gen_number,Quantity_initial_poblation,cross_over_probabili
                 # crx=copy.deepcopy(crxi);
                 # cry=copy.deepcopy(cryi);
                 crx,cry=crossover(crx,cry,cross_over_probability,Gen_number)
-                crx=mutation(crx,mutation_probability,Gen_number)
-                cry=mutation(cry,mutation_probability,Gen_number)
+                crx=mutation(crx,Gen_number)
+                cry=mutation(cry,Gen_number)
                 ffx=fitness_function(crx)
                 ffy=fitness_function(cry)
                 newff.append(ffx)
