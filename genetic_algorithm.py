@@ -7,14 +7,14 @@ class Chromosome():
     def __init__(self):
         self.list=[]
         self.ff=0
-        self.ps=0
+        #self.ps=0
 
     def setList(self,list):
         self.list=list
     def setff(self,ff):
         self.ff=ff
-    def setPs(self,ps):
-        self.ps=ps
+    # def setPs(self,ps):
+    #     self.ps=ps
 def generate_objetiveChromosome(length):
     chrom=[]
     for i in range(length):
@@ -62,17 +62,22 @@ def fitness_function(chromosome):
             sum=sum+1
     return sum
 
-##Averiguar com ohacerlo en base a su probabilidad
+## With choices
 def selection(poblation):
     # poblation_size=len(poblation)-1
     # return poblation[randint(0,poblation_size)], poblation[randint(0,poblation_size)]
-    print("-----------------------")
     weights = [i.ff for i in poblation]
-    print(weights)
     items = random.choices(poblation, weights=weights, k=2)
-    print(items[0].list)
-    print(items[1].list)
     return items[0],items[1]
+
+
+
+## With choice
+def selection(poblation):
+    weights = [i.ff for i in poblation]
+    items = random.choices(poblation, weights=weights, k=2)
+    return items[0],items[1]
+
 
 def compare_chromosome(chromosome,goal_chromosome):
     for i in range(len(goal_chromosome)):
@@ -80,7 +85,9 @@ def compare_chromosome(chromosome,goal_chromosome):
             return False
     return True
 
-
+def print_Initial_Poblation(pob):
+    for i in pob:
+        print( i.list)
 
 def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromosome):
     fitness_poblation=0
@@ -91,8 +98,6 @@ def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromos
         chromosome.list=generate_random_cromosome(Gen_number) #Generate the chromosome
         chromosome.ff=fitness_function(chromosome.list)  #Finde his Fitness function
         fitness_poblation=fitness_poblation+chromosome.ff
-        print("********************")
-        print(fitness_poblation)
         initial_poblation.append(chromosome)     #Added into the generation
         find_chromosome_objetive=find_chromosome_objetive or compare_chromosome(chromosome.list,objective_chromosome)
     return fitness_poblation,initial_poblation,find_chromosome_objetive
@@ -101,19 +106,22 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
     average=0
     objective_chromosome=generate_objetiveChromosome(Gen_number)
     for i in range(max_run_cycles) :
+        print(i, "*************************************************************")
         cycle=1
         #First Generation
         fitness_poblation,initial_poblation,find_chromosome_objetive=run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromosome)
         
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
-            for chrom in initial_poblation:
+
+            # for chrom in initial_poblation:
                 
-                chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation 
+            #     chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation 
                  
             new_generation=[]
             fitness_poblation=0
-            while len(new_generation)<=len(initial_poblation):
+            while len(new_generation)<len(initial_poblation):
+                #print_Initial_Poblation(initial_poblation)
                 crx=Chromosome()
                 cry=Chromosome()
                 crx,cry=selection(initial_poblation)
@@ -135,8 +143,9 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
 Gen_number=5
 Quantity_initial_poblation=10
 cross_over_probability=0.7
-mutation_probability=0.001
+mutation_probability=0.1
 
 max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: \n"))
 average_cycle=run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,mutation_probability,max_run_cycles)
+print("the experiment find the best solution in the average of ", average_cycle,"generations")
 
