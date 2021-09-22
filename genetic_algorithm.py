@@ -8,7 +8,7 @@ class Chromosome():
     def __init__(self):
         self.list=[]
         self.ff=0
-        #self.ps=0
+        self.ps=0
 
     def setList(self,list):
         self.list=list
@@ -63,24 +63,24 @@ def fitness_function(chromosome):
             sum=sum+1
     return sum
 
-## With choices
-# def selection(poblation):
-#     weights = [i.ff for i in poblation]
-#     items = random.choices(poblation, weights=weights, k=2)
-#     return items[0],items[1]
-
-
-
-## With choice
+# With choices
 def selection(poblation):
-    weights = [i.ps for i in poblation]
-    total_weight=0
-    for i in weights:
-        total_weight=total_weight+i
+    weights = [i.ff for i in poblation]
+    items = random.choices(poblation, weights=weights, k=2)
+    return items[0],items[1]
+
+
+
+# ## With choice
+# def selection(poblation):
+#     weights = [i.ps for i in poblation]
+#     total_weight=0
+#     for i in weights:
+#         total_weight=total_weight+i
     
-    item1 = choice(poblation, p=weights)
-    item2 = choice(poblation, p=weights)
-    return item1,item2
+#     item1 = choice(poblation, p=weights)
+#     item2 = choice(poblation, p=weights)
+#     return item1,item2
 
 
 def compare_chromosome(chromosome,goal_chromosome):
@@ -97,12 +97,17 @@ def run_first_generation(Gen_number,Quantity_initial_poblation,objective_chromos
     fitness_poblation=0
     find_chromosome_objetive=False
     initial_poblation=[]
-    for i in range(Quantity_initial_poblation): #Generate the N  number of chromosomes
+    for i in range(Quantity_initial_poblation):                     #Generate the N  number of chromosomes
+        print('///// RUN FIRST GENERATION //////')
         chromosome=Chromosome()
-        chromosome.list=generate_random_cromosome(Gen_number) #Generate the chromosome
-        chromosome.ff=fitness_function(chromosome.list)  #Finde his Fitness function
+        chromosome.list=generate_random_cromosome(Gen_number)       #Generate the chromosome
+        
+        chromosome.ff=fitness_function(chromosome.list)             #Finde his Fitness function
+        print('CHROMOSOME:',chromosome.list)
+        print('FITNES:',chromosome.ff)
         fitness_poblation=fitness_poblation+chromosome.ff
-        initial_poblation.append(chromosome)     #Added into the generation
+        print('FITNES POBLATION:',fitness_poblation)
+        initial_poblation.append(chromosome)                        #Added into the generation
         find_chromosome_objetive=find_chromosome_objetive or compare_chromosome(chromosome.list,objective_chromosome)
     return fitness_poblation,initial_poblation,find_chromosome_objetive
 
@@ -117,8 +122,23 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
         
         while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
             cycle=cycle+1
-            for chrom in initial_poblation:                
-                chrom.ps=chrom.ff/(fitness_poblation)    #Get the prob selection of the generation                  
+            my_sum = 0
+            contador = 0
+            for chrom in initial_poblation:
+                contador +=1
+                print('----------- PS -----------:',contador)           
+                # aux = chrom.ff/(fitness_poblation)    #Get the prob selection of the generation   
+                #chrom.ps = round(aux,2)
+                #chrom.ps = round(aux, 3)
+                #my_sum += chrom.ps
+                print('FITNES:',chrom.ff)
+                print('CHROMOSOME:',chrom.list)
+                #print('PS:',chrom.ps)    
+                #print('SUMATORIA:',my_sum)
+               # print('SUMATORIA REDONDEADA', round(my_sum,2)) 
+            #aux2 = round(aux, 2)
+            #print('FINAL:',aux2)
+            print('-----------------------------------:')   
             new_generation=[]
             fitness_poblation=0
             while len(new_generation)<len(initial_poblation):
@@ -141,8 +161,8 @@ def run_experiment(Gen_number,Quantity_initial_poblation,cross_over_probability,
     return average/max_run_cycles
 
 
-Gen_number=5
-Quantity_initial_poblation=10
+Gen_number=20
+Quantity_initial_poblation=100
 cross_over_probability=0.7
 mutation_probability=0.1
 

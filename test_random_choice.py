@@ -3,7 +3,7 @@ from numpy.random import choice
 
 # List Integers 
 sample_list = [100, 200, 300, 400, 500]
-sample_weights = [10, 20, 30, 40, 50]
+sample_weights = [0, 0, 0, 0, 0]
 sample_weights2 = [0.1, 0.2, 0.3, 0.2, 0.2] # Sum = 1
 
 
