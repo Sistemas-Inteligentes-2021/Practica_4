@@ -17,11 +17,11 @@ def generate_objetive_chromosome():
     return chrom
 
 # Generate [random (0,1), ...]
-def generate_random_cromosome():
-    cromosome = []
+def generate_random_chromosome():
+    chromosome = []
     for i in range(number_genes):        
-        cromosome.append(randint(0, 1))
-    return cromosome
+        chromosome.append(randint(0, 1))
+    return chromosome
 
 # Crossover: Get 2 new Chromosome
 def crossover(crx,cry):
@@ -64,7 +64,7 @@ def run_first_generation(quantity_population,ff_objetive):
     initial_poblation=[]
     ff=[]
     for i in range(quantity_population):                        #Generate the N  number of chromosomes
-        chromosome=generate_random_cromosome()
+        chromosome=generate_random_chromosome()
         initial_poblation.append(chromosome)                    #Generate the chromosome
         ff_chromosome=fitness_function(chromosome)
         ff.append(ff_chromosome)                                #Finde his Fitness function
@@ -103,7 +103,7 @@ def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objeti
     print("Cicle: " + str(i+1) +" - Generations: "+ str(cycle))
     return cycle
 
-    
+
 def genetic_algorithm(quantity_population,max_run_cycles):
     average= 0
     ff_objetive= number_genes
