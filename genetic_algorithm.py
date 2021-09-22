@@ -41,22 +41,14 @@ def crossover_random(crx,cry):
         return crx1,cry1
     return crx,cry
 
-# Mutation: Change a Random bit in Chromosome
-def mutation(chromosome_crossover):
-    if random()<=mutation_probability:
-        random_position =  randrange(number_genes)
-        chromosome_crossover[random_position] = 1 if chromosome_crossover[random_position] == 0 else 0
-        return chromosome_crossover
-    return chromosome_crossover
-
 # Mutation_Both: Change a Random bit in Chromosome 
-def mutation_both(c1, c2):
+def mutation_both(chromosome_x, chromosome_y):
     if random()<=mutation_probability:
         random_position =  randrange(number_genes)
-        c1[random_position] = 1 if c1[random_position] == 0 else 0
-        c2[random_position] = 1 if c2[random_position] == 0 else 0
-        return c1,c2
-    return c1,c2  
+        chromosome_x[random_position] = 1 if chromosome_x[random_position] == 0 else 0
+        chromosome_y[random_position] = 1 if chromosome_y[random_position] == 0 else 0
+        return chromosome_x,chromosome_y
+    return chromosome_x,chromosome_y  
 
 # Fitness: Sumatory Gens in Chromosome
 def fitness_function(chromosome):
@@ -67,7 +59,7 @@ def selection(poblation,ff):
     items = choices(poblation, weights=ff, k=2)
     return list(items[0]),list(items[1])
 
-def run_first_generation(quantity_population,objective_chromosome):
+def run_first_generation(quantity_population,ff_objetive):
     find_chromosome_objetive=False
     initial_poblation=[]
     ff=[]
@@ -76,45 +68,59 @@ def run_first_generation(quantity_population,objective_chromosome):
         initial_poblation.append(chromosome)                    #Generate the chromosome
         ff_chromosome=fitness_function(chromosome)
         ff.append(ff_chromosome)                                #Finde his Fitness function
-        find_chromosome_objetive = ff_chromosome==objective_chromosome
+        find_chromosome_objetive = ff_chromosome == ff_objetive
     return initial_poblation,ff,find_chromosome_objetive
 
+# Compare: 2 Fitness Function with Fitness Function Objetive
+def compare_chromosomes(ff_x, ff_y, ff_objetive):
+    return ff_x == ff_objetive or ff_y == ff_objetive
+
+# Execute: Selection, Crossover, Mutation
+def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i):
+    while  not find_chromosome_objetive:  # Check if the goal Fitnes Function is not generate in initial Generation  
+        cycle=cycle+1
+        new_generation=[]
+        new_ff=[]
+
+        while len(new_generation)<len(initial_poblation):
+            chromosome_x, chromosome_y= selection(initial_poblation,ff)                 # Selection
+            chromosome_x, chromosome_y= crossover_random (chromosome_x, chromosome_y)   # Crossover
+            chromosome_x, chromosome_y= mutation_both (chromosome_x, chromosome_y)      # Mutation
+
+            ff_x=fitness_function(chromosome_x)                                         # Fitness Function chromosome_x
+            ff_y=fitness_function(chromosome_y)                                         # Fitness Function chromosome_y
+
+            new_ff.append(ff_x)                                                         # Add ff_x to New Fitness Function
+            new_ff.append(ff_y)                                                         # Add ff_y to New Fitness Function
+
+            new_generation.append(chromosome_x)                                         # Add chromosome_x to New Generation
+            new_generation.append(chromosome_y)                                         # Add chromosome_y to New Generation
+
+            find_chromosome_objetive = compare_chromosomes(ff_x, ff_y, ff_objetive)      # Compare with ff_objetive
+
+        initial_poblation= new_generation
+        ff=new_ff
+    print("Cicle: " + str(i+1) +" - Generations: "+ str(cycle))
+    return cycle
+
+    
 def genetic_algorithm(quantity_population,max_run_cycles):
-    average=0
-    objective_chromosome_sum=number_genes
+    average= 0
+    ff_objetive= number_genes
+
     for i in range(max_run_cycles) :
         cycle=1
-        initial_poblation,ff,find_chromosome_objetive=run_first_generation(quantity_population,objective_chromosome_sum) #First Generation 
+        initial_poblation, ff, find_chromosome_objetive= run_first_generation(quantity_population,ff_objetive) # First Generation 
+        average += execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i)   # Next Generations
 
-        while  not find_chromosome_objetive:  #Check if the goalChrom is not generate in initial Generation  
-            cycle=cycle+1
-            new_generation=[]
-            newff=[]
-            while len(new_generation)<len(initial_poblation):
-                crx,cry=selection(initial_poblation,ff)
-
-                crx,cry=crossover_random(crx,cry)
-
-                #crx=mutation(crx)
-                #cry=mutation(cry)
-
-                crx, cry= mutation_both (crx,cry)
-
-                ffx=fitness_function(crx)
-                ffy=fitness_function(cry)
-                newff.append(ffx)
-                newff.append(ffy)
-                new_generation.append(crx)
-                new_generation.append(cry)
-                find_chromosome_objetive= ffx== objective_chromosome_sum or ffy==objective_chromosome_sum
-            initial_poblation= new_generation
-            ff=newff
-        print(i, cycle)
-        average=average+cycle
     return average/max_run_cycles
 
-
-if __name__ == "__main__" :
-    max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: \n"))
+# Main Function
+def main():
+    max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: "))
     average_cycle=genetic_algorithm(quantity_population,max_run_cycles)
-    print("The experiment find the best solution in the average of ", average_cycle,"generations")
+    print("The experiment find the best solution in the average of: ", average_cycle," generations.")
+
+if __name__ == '__main__':
+    main()
+    
