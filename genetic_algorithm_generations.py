@@ -115,18 +115,15 @@ def fitness_poblation(generation,ff_poblation):
 def main():
     generations= []
     ff_poblation=[]
-    # max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: "))
-    average_cycle=genetic_algorithm(quantity_population, generations)
+    genetic_algorithm(quantity_population, generations)
     fitness_poblation(generations, ff_poblation)
     print("|------- RESULTS -------|")
     print("* Genes:", genes_number)
     print("* Population:", quantity_population)
     print("* Probability Crossover:", crossover_probability)
     print("* Probability Mutation:", mutation_probability)
-    print("The experiment find the best solution in the average of: ", average_cycle," generations.")
     print("|-----------------------|")
 
-    print(ff_poblation)
     graph_generations(ff_poblation,generation_number)
 
 

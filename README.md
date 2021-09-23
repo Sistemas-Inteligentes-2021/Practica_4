@@ -139,6 +139,9 @@ Nº Run | 50  | 100 | 500  | 1000
 19 | 119 | 25 | 17 | 28
 20 | 36 | 31 | 24 | 27
 AVERAGE| 1701.55 | 45.35  | 28.95  | 27.4
+
+### Quantity of states
+
 ## 4. Conclusions
 
 Which is the best option?
