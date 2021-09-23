@@ -6,9 +6,13 @@
 - Juslan Vargas
 
 ## 1. Describing the Problem
+We have a poblation with 100 chromosomes and we must find the strongest chromosome in the new generations that we will create. The strongest chromosome is the one that will have only the number 1 in each gene. We will continue generating new populations until we find the strongest chromosome.
 
 ## 2. Describing the Solution
-
+To solve this problem we use the Genetic Algorithm, we are going to implement the 3 actions that comes with this algorithm:
+- Selection
+- Crossover
+- Mutation
 ## 3. Experiments & Results
 
 We execute the algorithm 20 times and we get the next data being the generations column the number of generations that were expanded until find the strongest chromosome
@@ -89,6 +93,8 @@ Nº Run | Space States
 20|   |
 AVERAGE|   |
 
+We comment this results on the conclusion.
+
 ### Other Experiments
 In this experiments we use a Crossover probability of 0.9 (90%), 0.3 (30%) and 0.7 (70%)  respectly and a Mutation probability of 0.001(1%), 0.001(1%), 0.1(1%) respectly
 Nº Run | Pc=0.9 P=0.001  | Pc=0.3 P=0.001 | Pc=0.7 P=0.1
@@ -149,10 +155,12 @@ Which is the best option?
 Which is the best quantity for initial poblation?
 - In the experiment we look and conclude that as we are increasing the quantity of initial poblation the number of  generation to find the strongest chromose decrease, in the experiment we use  Pc(crossover probability) = 0.9 (90%) and pm (mutation probability) = 0.001 (1%) and with 1000 chromosomes as initial poblation
 
+WITHOUT MUTATION Pc=0.7 Pm=0
+- If we don't have mutation, in many initial poblations its probably than with only crossover we will not be able to reach the solution.
 
 ### Comments
 
-
+At the beggining we experiment a lot of problems principally in the situation of the selection of the cromosomes. so we decided to change the focus we work with list, at the beggining we experimented that work with list is more efficient and find a solution, unfortunetly we got some values of generations that were overcalculated with values extremely high, but we resolved it changing the partition of the crossover function, now the partition is not for the middle the partition is chosed randomly, and with that we get more real values, some values still being extremely high but is because the number of chromosomes in the initial state, we can conclude that with more poblation of chromosomes we get more real values and in less steps
 
 
 ## 5. Bibliography
