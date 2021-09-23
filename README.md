@@ -83,7 +83,6 @@ Nº Run | Space States
 8 | 44
 9 | 45
 10 | 38
-
 AVERAGE|  41.1  |
 
 We comment this results on the conclusion.
