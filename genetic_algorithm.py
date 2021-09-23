@@ -78,7 +78,7 @@ def compare_chromosomes(ff_x, ff_y, ff_objetive):
 
 # Execute: Selection, Crossover, Mutation
 def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations):
-    while  not find_chromosome_objetive:  # Check if the goal Fitnes Function is not generate in initial Generation  
+    while  not find_chromosome_objetive:                                                # Check if the goal Fitnes Function is not generate in initial Generation  
         cycle=cycle+1
         new_generation=[]
         new_ff=[]
@@ -97,7 +97,7 @@ def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objeti
             new_generation.append(chromosome_x)                                         # Add chromosome_x to New Generation
             new_generation.append(chromosome_y)                                         # Add chromosome_y to New Generation
 
-            find_chromosome_objetive = compare_chromosomes(ff_x, ff_y, ff_objetive)      # Compare with ff_objetive
+            find_chromosome_objetive = compare_chromosomes(ff_x, ff_y, ff_objetive)     # Compare with ff_objetive
 
         initial_poblation= new_generation
         ff=new_ff
@@ -112,7 +112,7 @@ def genetic_algorithm(quantity_population, max_run_cycles, generations):
 
     for i in range(max_run_cycles) :
         cycle=1
-        initial_poblation, ff, find_chromosome_objetive= run_first_generation(quantity_population,ff_objetive) # First Generation 
+        initial_poblation, ff, find_chromosome_objetive= run_first_generation(quantity_population,ff_objetive)              # First Generation 
         average += execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations)   # Next Generations
 
     return average/max_run_cycles
@@ -129,8 +129,6 @@ def main():
     print("* Probability Mutation:", mutation_probability)
     print("The experiment find the best solution in the average of: ", average_cycle," generations.")
     print("|-----------------------|")
-    print("\n\n\n\n")
-    print(generations)
     graph_generations(generations,max_run_cycles)
 
 

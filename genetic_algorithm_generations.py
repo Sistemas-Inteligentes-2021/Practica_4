@@ -7,9 +7,10 @@ from graph_cycle_generation import graph_generations
 
 # Global Vars
 genes_number=20
-quantity_population=1000
+quantity_population=100
 
-crossover_probability=0.9
+generation_number=100
+crossover_probability=0.7
 mutation_probability=0.001
 
 # Generate [1, 1, 1, 1, ... ]
@@ -60,8 +61,7 @@ def selection(poblation,ff):
     items = choices(poblation, weights=ff, k=2)
     return list(items[0]),list(items[1])
 
-def run_first_generation(quantity_population,ff_objetive):
-    find_chromosome_objetive=False
+def run_first_generation(quantity_population):
     initial_poblation=[]
     ff=[]
     for i in range(quantity_population):                        #Generate the N  number of chromosomes
@@ -69,17 +69,14 @@ def run_first_generation(quantity_population,ff_objetive):
         initial_poblation.append(chromosome)                    #Generate the chromosome
         ff_chromosome=fitness_function(chromosome)
         ff.append(ff_chromosome)                                #Finde his Fitness function
-        find_chromosome_objetive = ff_chromosome == ff_objetive
-    return initial_poblation,ff,find_chromosome_objetive
+    return initial_poblation,ff
 
-# Compare: 2 Fitness Function with Fitness Function Objetive
-def compare_chromosomes(ff_x, ff_y, ff_objetive):
-    return ff_x == ff_objetive or ff_y == ff_objetive
 
 # Execute: Selection, Crossover, Mutation
-def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations):
-    while  not find_chromosome_objetive:  # Check if the goal Fitnes Function is not generate in initial Generation  
-        cycle=cycle+1
+def execute_functions(initial_poblation, ff, generations):
+
+    
+    for i in range(generation_number):                                            # Check if the goal Fitnes Function is not generate in initial Generation  
         new_generation=[]
         new_ff=[]
 
@@ -87,7 +84,7 @@ def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objeti
             chromosome_x, chromosome_y= selection(initial_poblation,ff)                 # Selection
             chromosome_x, chromosome_y= crossover_random (chromosome_x, chromosome_y)   # Crossover
             chromosome_x, chromosome_y= mutation_both (chromosome_x, chromosome_y)      # Mutation
-
+        
             ff_x=fitness_function(chromosome_x)                                         # Fitness Function chromosome_x
             ff_y=fitness_function(chromosome_y)                                         # Fitness Function chromosome_y
 
@@ -97,31 +94,30 @@ def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objeti
             new_generation.append(chromosome_x)                                         # Add chromosome_x to New Generation
             new_generation.append(chromosome_y)                                         # Add chromosome_y to New Generation
 
-            find_chromosome_objetive = compare_chromosomes(ff_x, ff_y, ff_objetive)      # Compare with ff_objetive
-
         initial_poblation= new_generation
         ff=new_ff
-    print("Cycle: " + str(i+1) +" - Generations: "+ str(cycle))
-    generations.append(cycle)
-    return cycle
+        generations.append(ff)
 
 
-def genetic_algorithm(quantity_population, max_run_cycles, generations):
-    average= 0
-    ff_objetive= genes_number
+def genetic_algorithm(quantity_population, generations):
+    initial_poblation, ff, = run_first_generation(quantity_population)              # First Generation 
+    execute_functions(initial_poblation, ff, generations)   # Next Generations
 
-    for i in range(max_run_cycles) :
-        cycle=1
-        initial_poblation, ff, find_chromosome_objetive= run_first_generation(quantity_population,ff_objetive) # First Generation 
-        average += execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations)   # Next Generations
-
-    return average/max_run_cycles
+def fitness_poblation(generation,ff_poblation):
+    
+    for i in generation:
+        sumatory=0
+        sumatory=sum(i)
+        ff_poblation.append(sumatory/genes_number)
+    
 
 # Main Function
 def main():
     generations= []
-    max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: "))
-    average_cycle=genetic_algorithm(quantity_population,max_run_cycles, generations)
+    ff_poblation=[]
+    # max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: "))
+    average_cycle=genetic_algorithm(quantity_population, generations)
+    fitness_poblation(generations, ff_poblation)
     print("|------- RESULTS -------|")
     print("* Genes:", genes_number)
     print("* Population:", quantity_population)
@@ -129,9 +125,9 @@ def main():
     print("* Probability Mutation:", mutation_probability)
     print("The experiment find the best solution in the average of: ", average_cycle," generations.")
     print("|-----------------------|")
-    print("\n\n\n\n")
-    print(generations)
-    graph_generations(generations,max_run_cycles)
+
+    print(ff_poblation)
+    graph_generations(ff_poblation,generation_number)
 
 
 if __name__ == '__main__':

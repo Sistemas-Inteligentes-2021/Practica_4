@@ -17,5 +17,6 @@ def graph_generations(generations, lenght):
     plt.ylabel('# Generations')
     plt.xlabel('# Number Cycles')
     plt.title('- Genetic Algorithm -')
-    plt.xticks(cycles)
+    if lenght < 20:
+        plt.xticks(cycles)
     plt.show()
