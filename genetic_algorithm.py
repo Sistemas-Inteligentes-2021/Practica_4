@@ -7,9 +7,9 @@ from graph_cycle_generation import graph_generations
 
 # Global Vars
 genes_number=20
-quantity_population=100
+quantity_population=1000
 
-crossover_probability=0.0
+crossover_probability=0.9
 mutation_probability=0.001
 
 # Generate [1, 1, 1, 1, ... ]
