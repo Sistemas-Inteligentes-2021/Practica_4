@@ -1,31 +1,32 @@
-# Imports
+# Libraries
 from random import randint
 from random import randrange
 from random import choices
 from random import random
+from graph_cycle_generation import graph_generations
 
 # Global Vars
-number_genes=20
-quantity_population=1000
+genes_number=20
+quantity_population=100
 
-crossover_probability=0.9
+crossover_probability=0.0
 mutation_probability=0.001
 
 # Generate [1, 1, 1, 1, ... ]
 def generate_objetive_chromosome():
-    chrom = [1] * number_genes
+    chrom = [1] * genes_number
     return chrom
 
 # Generate [random (0,1), ...]
 def generate_random_chromosome():
     chromosome = []
-    for i in range(number_genes):        
+    for i in range(genes_number):        
         chromosome.append(randint(0, 1))
     return chromosome
 
 # Crossover: Get 2 new Chromosome
 def crossover(crx,cry):
-    middle = int(number_genes/2)
+    middle = int(genes_number/2)
     if random()<=crossover_probability:
         crx1=crx[:middle]+cry[middle:]
         cry1=cry[:middle]+crx[middle:]
@@ -34,7 +35,7 @@ def crossover(crx,cry):
 
 # Crossover: Get 2 new Chromosome
 def crossover_random(crx,cry):
-    middle = randint(1,number_genes-1)
+    middle = randint(1,genes_number-1)
     if random()<=crossover_probability:
         crx1=crx[:middle]+cry[middle:]
         cry1=cry[:middle]+crx[middle:]
@@ -44,7 +45,7 @@ def crossover_random(crx,cry):
 # Mutation_Both: Change a Random bit in Chromosome 
 def mutation_both(chromosome_x, chromosome_y):
     if random()<=mutation_probability:
-        random_position =  randrange(number_genes)
+        random_position =  randrange(genes_number)
         chromosome_x[random_position] = 1 if chromosome_x[random_position] == 0 else 0
         chromosome_y[random_position] = 1 if chromosome_y[random_position] == 0 else 0
         return chromosome_x,chromosome_y
@@ -76,7 +77,7 @@ def compare_chromosomes(ff_x, ff_y, ff_objetive):
     return ff_x == ff_objetive or ff_y == ff_objetive
 
 # Execute: Selection, Crossover, Mutation
-def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i):
+def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations):
     while  not find_chromosome_objetive:  # Check if the goal Fitnes Function is not generate in initial Generation  
         cycle=cycle+1
         new_generation=[]
@@ -100,26 +101,38 @@ def execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objeti
 
         initial_poblation= new_generation
         ff=new_ff
-    print("Cicle: " + str(i+1) +" - Generations: "+ str(cycle))
+    print("Cycle: " + str(i+1) +" - Generations: "+ str(cycle))
+    generations.append(cycle)
     return cycle
 
 
-def genetic_algorithm(quantity_population,max_run_cycles):
+def genetic_algorithm(quantity_population, max_run_cycles, generations):
     average= 0
-    ff_objetive= number_genes
+    ff_objetive= genes_number
 
     for i in range(max_run_cycles) :
         cycle=1
         initial_poblation, ff, find_chromosome_objetive= run_first_generation(quantity_population,ff_objetive) # First Generation 
-        average += execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i)   # Next Generations
+        average += execute_functions(initial_poblation, ff, ff_objetive, find_chromosome_objetive, cycle, i, generations)   # Next Generations
 
     return average/max_run_cycles
 
 # Main Function
 def main():
+    generations= []
     max_run_cycles=int(input("Insert the quantity of cycle you want to do the algorithm: "))
-    average_cycle=genetic_algorithm(quantity_population,max_run_cycles)
+    average_cycle=genetic_algorithm(quantity_population,max_run_cycles, generations)
+    print("|------- RESULTS -------|")
+    print("* Genes:", genes_number)
+    print("* Population:", quantity_population)
+    print("* Probability Crossover:", crossover_probability)
+    print("* Probability Mutation:", mutation_probability)
     print("The experiment find the best solution in the average of: ", average_cycle," generations.")
+    print("|-----------------------|")
+    print("\n\n\n\n")
+    print(generations)
+    graph_generations(generations,max_run_cycles)
+
 
 if __name__ == '__main__':
     main()

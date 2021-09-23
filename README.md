@@ -16,33 +16,33 @@ We execute the algorithm 20 times and we get the next data being the generations
 In this first experiment we use a Crossover probability of 0.7 (70%) and a Mutation probability of 0.001(1%). We can also  see the results in the section of images/first_experiment.png
 Nº Run | Generations
 :---: | :---: 
-1| 43  |
-2| 92 |
-3| 54  |
-4| 34  |
-5| 80  |
-6| 68  |
-7| 37 |
-8| 34  |
-9| 77 |
-10| 27 |
-11| 42  |
-12| 29  |
-13| 48  |
-14| 35  |
-15| 49  |
-16| 327  |
-17| 42 |
-18| 46 |
-19| 40 |
-20| 50 |
-AVERAGE| 62.7  |
+1| 55  
+2| 30 
+3| 37  
+4| 60  
+5| 30  
+6| 65  
+7| 59 
+8| 48  
+9| 59 
+10| 34 
+11| 33  
+12| 31  
+13| 27  
+14| 25  
+15| 28  
+16| 44  
+17| 54 
+18| 37 
+19| 425 
+20| 42 
+AVERAGE| 61.15  
 ### WITHOUT CROSSOVER Pc=0 Pm=0.001
 In this experiment we use a Crossover probability of 0 (0%) and a Mutation probability of 0.001(1%). We can also  see the results in the section of images/without_crossover.png
 
 Nº Run | Space States 
 :---: | :---: 
-1| 4192 |
+1| 1636 |
 2| 4059 |
 3| 3228 |
 4| 3108 |
