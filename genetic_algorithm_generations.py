@@ -3,6 +3,8 @@ from random import randint
 from random import randrange
 from random import choices
 from random import random
+
+import numpy
 from graph_cycle_generation import graph_generations
 
 # Global Vars
@@ -123,7 +125,9 @@ def main():
     print("* Probability Crossover:", crossover_probability)
     print("* Probability Mutation:", mutation_probability)
     print("|-----------------------|")
-
+    print("* Strongest:", max(ff_poblation))
+    print("* Shortest:", min(ff_poblation))
+    print("* Average:", numpy.mean(ff_poblation))
     graph_generations(ff_poblation,generation_number)
 
 

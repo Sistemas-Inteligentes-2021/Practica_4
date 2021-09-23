@@ -140,7 +140,9 @@ Nº Run | 50  | 100 | 500  | 1000
 20 | 36 | 31 | 24 | 27
 AVERAGE| 1701.55 | 45.35  | 28.95  | 27.4
 
-### Quantity of states
+### Graphing the strongest, shortest and average  generation
+
+For this test we made a different algorithm "genetic_algorithm_generations.py" and we use matplot with pandas to make the graph taht is added in "images/Graph_100_gen/grap_100.png" that show how the fitness function is evolutioning(becoming stronger) as the number of generation are increasing
 
 ## 4. Conclusions
 
@@ -166,11 +168,20 @@ At the beggining we experiment a lot of problems principally in the situation of
 
 ➡️  Random in Range: [Python Docs: Randrange][random_range]
 
+➡️  Installation MatplotLib: [Matplot Lib: multiple subplots][matplotlib]
+    python -m pip install -U pip
+    python -m pip install -U matplotlib
+➡️  Installation Pandas: [Pandas: documentation][pandas]
+    pip install pandas
+
 
 
 [random]: https://docs.python.org/3/library/random.html
 
 [random_range]: https://docs.python.org/3/library/random.html#random.randrange
+
+[matplotlib]: https://matplotlib.org/stable/gallery/index.html
+[pandas]: https://pandas.pydata.org/docs/getting_started/install.html
 
 
 
