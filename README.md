@@ -10,9 +10,10 @@ We have a poblation with 100 chromosomes and we must find the strongest chromoso
 
 ## 2. Describing the Solution
 To solve this problem we use the Genetic Algorithm, we are going to implement the 3 actions that comes with this algorithm:
-- Selection
-- Crossover
-- Mutation
+- Selection: given a initial poblation of chromosomes, we select 2 chromosose based in weighted random chice with the objective to reproduce them
+- Crossover : Intercambiate genetic material beetween 2 chromosomes
+- Mutation: Select a completely random bit and invert it.
+
 In the other hand to calculate the probability of selection we are going to use the fitness function to get the strongest chromosome (with more 1)
 ## 3. Experiments & Results
 
