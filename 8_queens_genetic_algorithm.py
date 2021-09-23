@@ -50,7 +50,7 @@ def mutation_both(chromosome_x, chromosome_y):
         return chromosome_x,chromosome_y
     return chromosome_x,chromosome_y  
 
-# Fitness: Sumatory Gens in Chromosome
+# Fitness: we inspire in https://medium.com/nerd-for-tech/genetic-algorithm-8-queens-problem-b01730e673fd
 def fitness_function(chromosome):
     score = 0
     for row in range(8):
